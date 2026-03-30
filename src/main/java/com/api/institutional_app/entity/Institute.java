@@ -1,5 +1,7 @@
 package com.api.institutional_app.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +28,7 @@ public class Institute {
 
     @Column(nullable = true)
     private int locallong;
+
+    @OneToMany(mappedBy = "institute")
+    private List<CoordinatorInstitute> coordinatorInstitutes;
 }

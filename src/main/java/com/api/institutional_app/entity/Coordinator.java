@@ -1,5 +1,7 @@
 package com.api.institutional_app.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,5 +31,8 @@ public class Coordinator {
 
     @Column(nullable = false, columnDefinition = "ENUM('ACTIVE', 'INACTIVE', 'BLOCKED') DEFAULT 'ACTIVE'")
     private String status;
+
+    @OneToMany(mappedBy = "coordinator")
+    private List<CoordinatorInstitute> coordinatorInstitutes;
 
 }
