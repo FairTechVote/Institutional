@@ -25,7 +25,7 @@ public class CoordinatorInstitute {
     @JoinColumn(name = "institute_id", nullable = false)
     private Institute institute;
 
-    @Column(name = "status", nullable = false, columnDefinition = "ENUM('ACTIVE', 'INACTIVE') DEFAULT 'ACTIVE'")
+    @Column(name = "status", nullable = false, columnDefinition = "ENUM('ACTIVE', 'INACTIVE', 'BLOCKED') DEFAULT 'ACTIVE'")
     private String status;
 
     @Column(name = "created_at", nullable = false, updatable = false)
