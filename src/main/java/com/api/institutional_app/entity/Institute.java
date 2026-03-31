@@ -31,4 +31,7 @@ public class Institute {
 
     @OneToMany(mappedBy = "institute")
     private List<CoordinatorInstitute> coordinatorInstitutes;
+
+    @OneToMany(mappedBy = "institute")
+    private List<Event> events;
 }
