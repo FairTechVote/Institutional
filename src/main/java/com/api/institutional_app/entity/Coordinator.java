@@ -2,6 +2,8 @@ package com.api.institutional_app.entity;
 
 import java.util.List;
 
+import com.api.institutional_app.util.Status;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,8 +31,9 @@ public class Coordinator {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
 
-    @Column(nullable = false, columnDefinition = "ENUM('ACTIVE', 'INACTIVE', 'BLOCKED') DEFAULT 'ACTIVE'")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
     @OneToMany(mappedBy = "coordinator")
     private List<CoordinatorInstitute> coordinatorInstitutes;

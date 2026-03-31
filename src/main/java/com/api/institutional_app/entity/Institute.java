@@ -24,10 +24,10 @@ public class Institute {
     private String cnpj;
 
     @Column(nullable = true)
-    private int locallat;
+    private Double locallat;
 
     @Column(nullable = true)
-    private int locallong;
+    private Double locallong;
 
     @OneToMany(mappedBy = "institute")
     private List<CoordinatorInstitute> coordinatorInstitutes;

@@ -2,6 +2,8 @@ package com.api.institutional_app.entity;
 
 import java.time.LocalDateTime;
 
+import com.api.institutional_app.util.Status;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +27,9 @@ public class CoordinatorInstitute {
     @JoinColumn(name = "institute_id", nullable = false)
     private Institute institute;
 
-    @Column(name = "status", nullable = false, columnDefinition = "ENUM('ACTIVE', 'INACTIVE', 'BLOCKED') DEFAULT 'ACTIVE'")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
