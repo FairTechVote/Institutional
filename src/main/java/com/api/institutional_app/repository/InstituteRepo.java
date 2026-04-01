@@ -11,8 +11,4 @@ import com.api.institutional_app.entity.Institute;
 @Repository
 public interface InstituteRepo extends JpaRepository<Institute, Long> {
 
-    public Optional<List<Institute>> findByName(String name);
-
-    public Optional<List<Institute>> findByNameAndCnpj(String name, String cnpj);
-
 }
