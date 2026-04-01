@@ -1,11 +1,12 @@
 package com.api.institutional_app.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
 import com.api.institutional_app.util.Status;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -31,5 +32,8 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
+
+    @OneToMany(mappedBy = "project")
+    private List<Vote> votes;
 
 }
