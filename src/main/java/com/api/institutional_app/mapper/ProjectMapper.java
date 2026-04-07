@@ -20,6 +20,7 @@ public interface ProjectMapper {
     @Mapping(target = "votes", ignore = true)
     Project toEntity(RequestProject dto);
 
+    @Mapping(target = "event", source = "event")
     @Mapping(target = "votes", source = "votes")
     ResponseProject toDto(Project entity);
 
