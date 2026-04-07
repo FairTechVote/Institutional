@@ -9,7 +9,7 @@ import com.api.institutional_app.dto.SummaryEventDto;
 import com.api.institutional_app.dto.SummaryVisitor;
 import com.api.institutional_app.entity.Event;
 import com.api.institutional_app.entity.Project;
-import com.api.institutional_app.entity.Visitor;
+import com.api.institutional_app.entity.Vote;
 
 @Mapper(componentModel = "spring")
 public interface ProjectMapper {
@@ -20,6 +20,7 @@ public interface ProjectMapper {
     @Mapping(target = "votes", ignore = true)
     Project toEntity(RequestProject dto);
 
+    @Mapping(target = "votes", source = "votes")
     ResponseProject toDto(Project entity);
 
     @Mapping(target = "id", source = "id")
@@ -27,9 +28,9 @@ public interface ProjectMapper {
     @Mapping(target = "Description", source = "description")
     SummaryEventDto toSummaryEventDto(Event event);
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "cpf", source = "cpf")
-    SummaryVisitor toSummaryVisitor(Visitor visitor);
+    @Mapping(target = "id", source = "visitor.id")
+    @Mapping(target = "name", source = "visitor.name")
+    @Mapping(target = "cpf", source = "visitor.cpf")
+    SummaryVisitor toSummaryVisitor(Vote vote);
 
 }
