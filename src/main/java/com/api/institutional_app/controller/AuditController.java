@@ -21,7 +21,7 @@ public class AuditController {
     private final SysLogsServiceImpl sysLogsServiceImpl;
 
     @PostMapping("/by-date")
-    public ResponseEntity<ResponseSysLogsByDate> postMethodName(
+    public ResponseEntity<ResponseSysLogsByDate> sysLogsByDate(
             @RequestBody RequestSysLogsByDate request) {
         return ResponseEntity.ok(sysLogsServiceImpl.getSysLogsByDate(request));
     }
