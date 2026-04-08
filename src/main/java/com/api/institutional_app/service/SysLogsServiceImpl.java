@@ -1,7 +1,7 @@
 package com.api.institutional_app.service;
 
 import com.api.institutional_app.mapper.SysLogsMapper;
-import com.api.institutional_app.repository.SysLogsRepository;
+import com.api.institutional_app.repository.SysLogsRepo;
 
 import com.api.institutional_app.dto.RequestSysLogsByDate;
 import com.api.institutional_app.dto.ResponseSysLogsByDate;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysLogsServiceImpl implements SysLogsService {
 
-    private final SysLogsRepository repository;
+    private final SysLogsRepo repository;
     private final SysLogsMapper mapper;
 
     @Override
