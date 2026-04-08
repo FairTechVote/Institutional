@@ -6,6 +6,7 @@ import com.api.institutional_app.repository.SysLogsRepo;
 import com.api.institutional_app.dto.RequestSysLogsByDate;
 import com.api.institutional_app.dto.ResponseSysLogsByDate;
 import com.api.institutional_app.dto.SummarySysLogs;
+import com.api.institutional_app.exception.NoRecordsFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,11 @@ public class SysLogsServiceImpl implements SysLogsService {
 
         List<SummarySysLogs> logs = mapper.toSummaryList(
                 repository.findByChangedAtBetween(start, end));
+
+        if (logs == null || logs.isEmpty()) {
+            throw new NoRecordsFoundException(
+                    "Nenhum log encontrado entre " + request.startDate() + " e " + request.endDate());
+        }
 
         return new ResponseSysLogsByDate(logs);
 
