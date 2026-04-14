@@ -15,6 +15,9 @@ public class InstitutionalAppApplication {
 		System.setProperty("DATABASE_USERNAME", dotenv.get("DATABASE_USERNAME"));
 		System.setProperty("DATABASE_PASSWORD", dotenv.get("DATABASE_PASSWORD"));
 
+		System.setProperty("jwt.secret", dotenv.get("JWT_SECRET"));
+    	System.setProperty("jwt.expiration", dotenv.get("JWT_EXPIRATION"));
+
 		SpringApplication.run(InstitutionalAppApplication.class, args);
 	}
 
