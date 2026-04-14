@@ -21,7 +21,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
 
     private static final List<String> PUBLIC_ROUTES = List.of(
-            "/audit/",
+            "/register/",
             "/auth/",
             "/institutes/");
 
