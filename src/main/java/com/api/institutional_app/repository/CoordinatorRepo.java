@@ -12,4 +12,6 @@ public interface CoordinatorRepo extends JpaRepository<Coordinator, Long> {
 
     Optional<Coordinator> findByEmail(String email);
 
+    Optional<Coordinator> findByCpf(String cpf);
+
 }
