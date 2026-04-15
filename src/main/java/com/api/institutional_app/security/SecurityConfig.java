@@ -22,12 +22,16 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/institutes/**").permitAll()
-                        .requestMatchers("/register/**").permitAll()
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/v3/api-docs/**").permitAll()
-                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/", "/index.html").permitAll()
+                        .requestMatchers("/**/*.css", "/**/*.js", "/**/*.png",
+                                "/**/*.jpg", "/**/*.woff", "/**/*.woff2")
+                        .permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/register/**").permitAll()
+                        .requestMatchers("/api/v1/institutes/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**",
+                                "/swagger-ui.html")
+                        .permitAll()
                         .anyRequest().authenticated());
 
         return http.build();

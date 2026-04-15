@@ -21,16 +21,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
 
     private static final List<String> PUBLIC_ROUTES = List.of(
-            "/register/",
-            "/auth/",
+            "/",
+            "/index.html",
+            "/api/v1/auth/",
+            "/api/v1/register/",
             "/swagger-ui",
             "/v3/api-docs",
-            "/swagger-ui.html",
-            "/swagger-ui/");
+            "/swagger-ui.html");
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
+        if (path.endsWith(".js") || path.endsWith(".css") ||
+                path.endsWith(".png") || path.endsWith(".jpg") ||
+                path.endsWith(".woff") || path.endsWith(".woff2")) {
+            return true;
+        }
         return PUBLIC_ROUTES.stream().anyMatch(path::startsWith);
     }
 

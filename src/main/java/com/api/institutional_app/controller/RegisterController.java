@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/register")
+@RequestMapping("/api/v1/register")
 @RequiredArgsConstructor
 public class RegisterController {
 

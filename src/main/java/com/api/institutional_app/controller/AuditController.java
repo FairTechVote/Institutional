@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/audit")
+@RequestMapping("/api/v1/audit")
 @RequiredArgsConstructor
 public class AuditController {
 
