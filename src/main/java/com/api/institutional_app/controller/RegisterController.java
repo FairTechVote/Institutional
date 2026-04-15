@@ -7,6 +7,9 @@ import com.api.institutional_app.dto.CoordinatorAuthResponse;
 import com.api.institutional_app.dto.RequestCoordinator;
 import com.api.institutional_app.service.RegisterService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,12 @@ public class RegisterController {
     private final RegisterService registerService;
 
     @PostMapping("/coordinator")
+    @Operation(summary = "Register a new coordinator", description = "Endpoint to register a new coordinator in the system.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Coordinator registered successfully"),
+            @ApiResponse(responseCode = "404", description = "email already in use"),
+            @ApiResponse(responseCode = "404", description = "cpf already in use"),
+    })
     public ResponseEntity<CoordinatorAuthResponse> registerCoordinator(@RequestBody RequestCoordinator request) {
         CoordinatorAuthResponse response = registerService.registerCoordinator(request);
         return ResponseEntity.ok(response);

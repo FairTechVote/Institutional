@@ -23,7 +23,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private static final List<String> PUBLIC_ROUTES = List.of(
             "/register/",
             "/auth/",
-            "/institutes/");
+            "/swagger-ui",
+            "/v3/api-docs",
+            "/swagger-ui.html",
+            "/swagger-ui/");
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
