@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/v1/register")
@@ -22,6 +23,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RegisterController {
 
     private final RegisterService registerService;
+
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("Register service is running");
+    }
 
     @PostMapping("/coordinator")
     @Operation(summary = "Register a new coordinator", description = "Endpoint to register a new coordinator in the system.")
