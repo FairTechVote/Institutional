@@ -37,7 +37,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 path.endsWith(".woff") || path.endsWith(".woff2")) {
             return true;
         }
-        return PUBLIC_ROUTES.stream().anyMatch(path::startsWith);
+        return PUBLIC_ROUTES.stream()
+                .anyMatch(pattern -> path.startsWith(pattern) || path.equals(pattern.replace("/", "")));
     }
 
     @Override
