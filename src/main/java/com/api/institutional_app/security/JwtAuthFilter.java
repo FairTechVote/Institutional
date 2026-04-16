@@ -1,0 +1,79 @@
+package com.api.institutional_app.security;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.List;
+
+@Component
+@RequiredArgsConstructor
+public class JwtAuthFilter extends OncePerRequestFilter {
+
+    private final JwtProvider jwtProvider;
+
+    private static final List<String> PUBLIC_ROUTES = List.of(
+            "/",
+            "/index.html",
+            "/api/v1/auth/",
+            "/api/v1/register/",
+            "/swagger-ui",
+            "/v3/api-docs",
+            "/swagger-ui.html");
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        if (path.endsWith(".js") || path.endsWith(".css") ||
+                path.endsWith(".png") || path.endsWith(".jpg") ||
+                path.endsWith(".woff") || path.endsWith(".woff2")) {
+            return true;
+        }
+        return PUBLIC_ROUTES.stream().anyMatch(path::startsWith);
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain)
+            throws ServletException, IOException {
+
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token ausente ou inválido");
+            return;
+        }
+
+        String token = authHeader.substring(7);
+
+        try {
+            String username = validateTokenAndGetUsername(token);
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null,
+                    List.of());
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            filterChain.doFilter(request, response);
+
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token inválido ou expirado");
+        }
+    }
+
+    private String validateTokenAndGetUsername(String token) {
+
+        return jwtProvider.validateTokenAndGetUsername(token);
+    }
+}
