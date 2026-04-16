@@ -27,12 +27,21 @@ public class InstitutionalAppApplication {
 	}
 
 	private static void loadEnviromentVariables() {
-		Dotenv dotenv = Dotenv.load();
-		setPropertyWithFallback("DATABASE_URL", dotenv);
-		setPropertyWithFallback("DATABASE_USERNAME", dotenv);
-		setPropertyWithFallback("DATABASE_PASSWORD", dotenv);
-		setPropertyWithFallback("JWT_SECRET", dotenv);
-		setPropertyWithFallback("JWT_EXPIRATION", dotenv);
+		try {
+			Dotenv dotenv = Dotenv.configure()
+					.ignoreIfMissing()
+					.load();
+
+			setPropertyWithFallback("DATABASE_URL", dotenv);
+			setPropertyWithFallback("DATABASE_USERNAME", dotenv);
+			setPropertyWithFallback("DATABASE_PASSWORD", dotenv);
+			setPropertyWithFallback("JWT_SECRET", dotenv);
+			setPropertyWithFallback("JWT_EXPIRATION", dotenv);
+
+			System.out.println("Enviroment variables loaded from .env file.");
+		} catch (Exception e) {
+			System.out.println("File .env not found. Using system variables.");
+		}
 	}
 
 }
