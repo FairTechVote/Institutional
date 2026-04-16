@@ -9,16 +9,30 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class InstitutionalAppApplication {
 
 	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.load();
-
-		System.setProperty("DATABASE_URL", dotenv.get("DATABASE_URL"));
-		System.setProperty("DATABASE_USERNAME", dotenv.get("DATABASE_USERNAME"));
-		System.setProperty("DATABASE_PASSWORD", dotenv.get("DATABASE_PASSWORD"));
-
-		System.setProperty("jwt.secret", dotenv.get("JWT_SECRET"));
-    	System.setProperty("jwt.expiration", dotenv.get("JWT_EXPIRATION"));
-
+		loadEnviromentVariables();
 		SpringApplication.run(InstitutionalAppApplication.class, args);
+	}
+
+	private static void setPropertyWithFallback(String key, Dotenv dotenv) {
+
+		String value = System.getenv(key);
+
+		if (value == null) {
+			value = dotenv.get(key);
+		}
+		if (value != null) {
+			System.setProperty(key, value);
+		}
+
+	}
+
+	private static void loadEnviromentVariables() {
+		Dotenv dotenv = Dotenv.load();
+		setPropertyWithFallback("DATABASE_URL", dotenv);
+		setPropertyWithFallback("DATABASE_USERNAME", dotenv);
+		setPropertyWithFallback("DATABASE_PASSWORD", dotenv);
+		setPropertyWithFallback("JWT_SECRET", dotenv);
+		setPropertyWithFallback("JWT_EXPIRATION", dotenv);
 	}
 
 }
