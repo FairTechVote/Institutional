@@ -15,12 +15,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneral(Exception ex) {
+
+        ex.printStackTrace();
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 Map.of(
                         "timestamp", LocalDateTime.now(),
                         "status", 500,
-                        "error", "Internal Server Error",
-                        "message", "Erro inesperado"));
+                        "error", ex.getClass().getSimpleName(),
+                        "message", ex.getMessage() != null ? ex.getMessage() : "Sem mensagem",
+                        "trace", ex.getStackTrace()[0].toString()));
     }
 
     @ExceptionHandler(NoRecordsFoundException.class)

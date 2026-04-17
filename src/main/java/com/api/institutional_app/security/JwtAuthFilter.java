@@ -47,7 +47,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Token validation failed: " + e.getMessage());
             SecurityContextHolder.clearContext();
         }
 
