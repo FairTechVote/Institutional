@@ -32,13 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        if (path.endsWith(".js") || path.endsWith(".css") ||
-                path.endsWith(".png") || path.endsWith(".jpg") ||
-                path.endsWith(".woff") || path.endsWith(".woff2")) {
-            return true;
-        }
-        return PUBLIC_ROUTES.stream()
-                .anyMatch(pattern -> path.startsWith(pattern) || path.equals(pattern.replace("/", "")));
+        return PUBLIC_ROUTES.stream().anyMatch(path::startsWith);
     }
 
     @Override
@@ -50,8 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token ausente ou inválido");
+            filterChain.doFilter(request, response);
             return;
         }
 
