@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Component
@@ -35,8 +34,7 @@ public class JwtProvider {
     }
 
     public SecretKey getSigninKey() {
-        byte[] keybytes = Decoders.BASE64.decode(jwtSecret);
-        return Keys.hmacShaKeyFor(keybytes);
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
     public String validateTokenAndGetUsername(String token) {

@@ -45,7 +45,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         if (request.cpf() == null || request.cpf().length() != 14) {
-            throw new BadRequestException("CPF inválido. Formato esperado: XX.XXX.XXX/XXXX-XX");
+            throw new BadRequestException("CPF inválido. Formato esperado: XX.XXX.XXX-XX");
         }
 
         if (request.email() == null || request.email().isBlank()) {
