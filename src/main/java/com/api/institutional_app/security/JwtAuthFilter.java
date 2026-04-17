@@ -38,8 +38,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             String username = validateTokenAndGetUsername(token);
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null,
-                    List.of());
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    username,
+                    null,
+                    List.of(() -> "ROLE_USER"));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
