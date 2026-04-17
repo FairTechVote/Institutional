@@ -38,7 +38,6 @@ public class JwtProvider {
     }
 
     public String validateTokenAndGetUsername(String token) {
-        System.out.println("JWT_SECRET: " + jwtSecret);
         try {
             Claims claims = Jwts.parser()
                     .verifyWith(getSigninKey())
