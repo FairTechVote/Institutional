@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.api.institutional_app.dto.CoordinatorAuthResponse;
 import com.api.institutional_app.dto.RequestCoordinator;
 import com.api.institutional_app.entity.Coordinator;
+import com.api.institutional_app.exception.BadRequestException;
+import com.api.institutional_app.exception.ConflictException;
 import com.api.institutional_app.repository.CoordinatorRepo;
 import com.api.institutional_app.security.JwtProvider;
 import com.api.institutional_app.util.Status;
@@ -32,30 +34,30 @@ public class RegisterServiceImpl implements RegisterService {
                 .findByEmail(request.email());
 
         if (emailExists.isPresent()) {
-            throw new RuntimeException("Email " + request.email() + " já está cadastrado");
+            throw new ConflictException("Email já vinculado a conta");
         }
 
         Optional<Coordinator> cpfExists = coordinatorRepo
                 .findByCpf(request.cpf());
 
         if (cpfExists.isPresent()) {
-            throw new RuntimeException("CPF " + request.cpf() + " já está cadastrado");
+            throw new ConflictException("CPF já está cadastrado");
         }
 
         if (request.cpf() == null || request.cpf().length() != 14) {
-            throw new RuntimeException("CPF inválido. Formato esperado: XX.XXX.XXX/XXXX-XX");
+            throw new BadRequestException("CPF inválido. Formato esperado: XX.XXX.XXX/XXXX-XX");
         }
 
         if (request.email() == null || request.email().isBlank()) {
-            throw new RuntimeException("Email não pode estar vazio");
+            throw new BadRequestException("Email não pode estar vazio");
         }
 
         if (request.name() == null || request.name().isBlank()) {
-            throw new RuntimeException("Nome não pode estar vazio");
+            throw new BadRequestException("Nome não pode estar vazio");
         }
 
         if (request.password() == null || request.password().length() < 6) {
-            throw new RuntimeException("Senha deve ter no mínimo 6 caracteres");
+            throw new BadRequestException("Senha deve ter no mínimo 6 caracteres");
         }
 
         String encodedPassword = passwordEncoder.encode(request.password());
