@@ -28,6 +28,7 @@ public class AuthController {
 
     @PostMapping("/coordinator")
     public ResponseEntity<CoordinatorAuthResponse> coordinatorLogin(@RequestBody CoordinatorAuthRequest request) {
+        System.out.println("INSTANCE: " + System.identityHashCode(this));
         CoordinatorAuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
     }
