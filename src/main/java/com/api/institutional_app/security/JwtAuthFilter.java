@@ -20,25 +20,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
 
-    private static final List<String> PUBLIC_ROUTES = List.of(
-            "/",
-            "/index.html",
-            "/api/v1/auth/",
-            "/api/v1/register/",
-            "/swagger-ui",
-            "/v3/api-docs",
-            "/swagger-ui.html");
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        String path = request.getServletPath();
-        boolean skip = PUBLIC_ROUTES.stream().anyMatch(path::startsWith);
-
-        System.out.println(">>> PATH: " + path + " | SKIP FILTER: " + skip);
-
-        return skip;
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
             HttpServletResponse response,
