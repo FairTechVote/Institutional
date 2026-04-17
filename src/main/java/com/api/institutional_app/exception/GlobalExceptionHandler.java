@@ -34,4 +34,9 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", ex.getMessage()));
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<?> handleInvalid(InvalidCredentialsException ex) {
+        return ResponseEntity.status(401).body(ex.getMessage());
+    }
+
 }

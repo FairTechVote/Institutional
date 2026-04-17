@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.api.institutional_app.dto.CoordinatorAuthRequest;
 import com.api.institutional_app.dto.CoordinatorAuthResponse;
 import com.api.institutional_app.entity.Coordinator;
+import com.api.institutional_app.exception.InvalidCredentialsException;
 import com.api.institutional_app.repository.CoordinatorRepo;
 import com.api.institutional_app.security.JwtProvider;
 
@@ -31,13 +32,13 @@ public class AuthServiceImpl implements AuthService {
                 .findByEmail(request.email());
 
         if (search.isEmpty()) {
-            throw new RuntimeException("Conta com email " + request.email() + " não encontrada");
+            throw new InvalidCredentialsException("Email não encontrado");
         }
 
         Coordinator coordinator = search.get();
 
         if (!passwordEncoder.matches(request.password(), coordinator.getPassword())) {
-            throw new RuntimeException("Senha incorreta");
+            throw new InvalidCredentialsException("Senha incorreta");
         }
 
         String token = jwtProvider.generateToken(coordinator.getEmail());
