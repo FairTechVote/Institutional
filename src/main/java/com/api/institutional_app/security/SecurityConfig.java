@@ -32,7 +32,6 @@ public class SecurityConfig {
                                 "/**/*.jpg", "/**/*.woff", "/**/*.woff2")
                         .permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/auth/coordinator").permitAll()
                         .requestMatchers("/api/v1/register/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**",
                                 "/swagger-ui.html")
