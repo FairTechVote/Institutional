@@ -11,6 +11,7 @@ public class InstituteController {
 
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
+        System.out.println("INSTANCE: " + System.identityHashCode(this));
         return ResponseEntity.ok("Institutes API is healthy!");
     }
 
