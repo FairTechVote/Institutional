@@ -7,6 +7,7 @@ import com.api.institutional_app.dto.RequestInstitute;
 import com.api.institutional_app.dto.ResponseInstitute;
 import com.api.institutional_app.dto.SummaryCoordinatorDto;
 import com.api.institutional_app.dto.SummaryEventDto;
+import com.api.institutional_app.dto.SummaryInstitute;
 import com.api.institutional_app.entity.CoordinatorInstitute;
 import com.api.institutional_app.entity.Event;
 import com.api.institutional_app.entity.Institute;
@@ -22,9 +23,14 @@ public interface InstituteMapper {
     @Mapping(target = "coordinators", source = "coordinatorInstitutes")
     ResponseInstitute toDto(Institute entity);
 
+    @Mapping(target = "id", source = "institute.id")
+    @Mapping(target = "name", source = "institute.name")
+    @Mapping(target = "cnpj", source = "institute.cnpj")
+    SummaryInstitute toSummaryInstitute(CoordinatorInstitute institute);
+
     @Mapping(target = "id", source = "coordinator.id")
     @Mapping(target = "name", source = "coordinator.name")
-    SummaryCoordinatorDto tSummaryCoordinatorDto(CoordinatorInstitute coordinatorInstitute);
+    SummaryCoordinatorDto toSummaryCoordinatorDto(CoordinatorInstitute coordinatorInstitute);
 
     @Mapping(target = "Title", source = "event.title")
     @Mapping(target = "Description", source = "event.description")
