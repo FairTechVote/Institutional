@@ -18,7 +18,7 @@ public class InstituteController {
 
     private final InstituteServiceImpl instituteService;
 
-    @GetMapping("/coordinator/{coordinatorId}")
+    @GetMapping("/coordinator/{coordinatorId}/institute")
     public ResponseEntity<CoordinatorInstituteListResponse> getCoordinatorInstitutes(@PathVariable Long coordinatorId) {
         CoordinatorInstituteListResponse response = instituteService.getCoordinatorInstitute(coordinatorId);
         return ResponseEntity.ok(response);
